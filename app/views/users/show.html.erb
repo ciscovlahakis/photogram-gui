@@ -1,0 +1,49 @@
+<nav>
+  <ul>
+    <li>
+      <a href="/users">Users</a>
+    </li>
+    <li>
+      <a href="/photos">Photos</a>
+    </li>
+  </ul>
+</nav>
+
+<h1><%= @user.username %></h1>
+
+<dl>
+  <dt>ID</dt>
+  <dd><%= @user.id %></dd>
+
+  <dt>Edit user</dt>
+  <dd>
+    <form action="/update_user/<%= @user.id %>" method="post">
+      <label for="browser_username">Username</label>
+      <!-- Added missing closing tag for the input element and quotes around value attribute -->
+      <input id="browser_username" type="text" name="input_username" value="<%= @user.username %>">
+      <button>Update user</button>
+    </form>
+  </dd>
+</dl>
+
+<h2>Own photos (0)</h2>
+
+<table border="1">
+  <!-- The table headers should be outside the loop -->
+  <tr>
+    <th>Image</th>
+    <th>Owner</th>
+    <th>Caption</th>
+    <th>Posted</th>
+  </tr>
+  
+  <% id = @user.id %>
+  <% matching_photos = Photo.where(owner_id: id) %>
+
+  <% matching_photos.each do |photo| %>
+    <tr>
+      <td><img src="<%= photo.image %>" height="300px"></td>
+      <td><%= photo.caption %></td> <!-- Display the caption of the photo here -->
+    </tr>
+  <% end %>
+</table>

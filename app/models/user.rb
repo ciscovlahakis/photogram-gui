@@ -12,6 +12,9 @@
 #
 
 class User < ApplicationRecord
+  has_many :photos, foreign_key: 'owner_id'
+  has_many :comments, foreign_key: 'author_id'
+  
   validates(:username, {
     :presence => true,
     :uniqueness => { :case_sensitive => false },
